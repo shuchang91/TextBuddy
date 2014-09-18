@@ -29,8 +29,16 @@
 #include <algorithm>
 #include <cctype>
 
+const int VALID_ARGC = 1;
+const int SAVE_FILE_LOCATION_IN_ARGV = 2;
+
 class TextBuddy {
+
 public:
+	static void runTextBuddy(char* argv[]);
+	static void terminateTextBuddy();
+	static bool isValidInitialization(int argc, char* argv[]);
+
 };
 
 #endif

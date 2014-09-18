@@ -1,10 +1,19 @@
 #include "TextBuddy.h"
 
 void main(int argc, char* argv[]) {
-	if(isValidInitialization(argc, argv) {
-		runTextBuddy(argv);
+	if(TextBuddy::isValidInitialization(argc, argv) {
+		TextBuddy::runTextBuddy(argv);
 	}
 	else {
-		terminateTextBuddy();
+		TextBuddy::terminateTextBuddy();
 	}
+}
+
+void TextBuddy::runTextBuddy(char* argv[]) {
+}
+
+void TextBuddy::terminateTextBuddy() {
+}
+
+bool TextBuddy::isValidInitialization(int argc, char* argv[]) {
 }
