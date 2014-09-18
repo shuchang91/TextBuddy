@@ -29,10 +29,6 @@
 #include <algorithm>
 #include <cctype>
 
-enum CommandType {
-		ADD, DELETE, DISPLAY, CLEAR, SORT, SEARCH, INVALID, EXIT
-	};
-
 const int MAX_STRING_LENGTH = 1000;
 const int VALID_ARGC = 1;
 const int SAVE_FILE_LOCATION_IN_ARGV = 2;
@@ -68,8 +64,12 @@ private:
 	static std::vector<std::string> textStorage;
 	static std::vector<int> searchStorage;
 
+	enum CommandType {
+		ADD, DELETE, DISPLAY, CLEAR, SORT, SEARCH, INVALID, EXIT
+	};
+
 public:
-	//***********************************************************************//
+	//TEXTBUDDY++ ENTRY POINT************************************************//
 	//Runs TextBuddy++.
 	static void runTextBuddy(char* argv[]);
 	//Exits TextBuddy++.
@@ -81,20 +81,49 @@ public:
 	//Checks if the save file specified is a txt file.
 	static bool isValidSaveFile(std::string saveFile);
 
-	//***********************************************************************//
+	//MAIN PROGRAM LOGIC*****************************************************//
+	//Prompts for and takes in a line of string as user input.
+	static std::string getUserInput();
+	//Executes the input specified.
+	static void executeInput(std::string userInput);
+	//Determines the command type of the user input.
+	static CommandType determineCommandType(std::string userInput);
+	//Checks the validity of a command regarding the parameter(s) specified. 
+	//Returns true if there is a parameter when the program expects one.
+	static bool isValidCommandParameters(std::string userInput);
+	//Checks the validity of a delete command parameter. 
+	//Returns true if parameter specified is an integer.
+	static bool isValidDeleteCommand(std::string userInput);
+
+	//READING AND WRITING TO SAVE FILE***************************************//
 	//Reads the content from the save file and copies it to internal storage.
 	static void readFromSaveFile();
 	//Saves the content from internal storage to the save file.
 	static void saveToSaveFile();
 
-	//***********************************************************************//
+	//DISPLAY MESSAGES TO USER***********************************************//
 	//Displays the message specified to the user.
 	static void showMessage(std::string message);
 	//Displays the formatted welcome message.
 	static void showMessageWelcome();
+	
+	//STRING MODIFIERS*******************************************************//
+	//Returns the first word in a line of text.
+	static std::string getFirstWord(std::string text);
+	//Returns a line of text with the first word removed.
+	static std::string removeFirstWord(std::string text);
+	//Checks if a line of text contains only one word.
+	static bool isOneWord(std::string text);
+	//Returns a line of text converted to lowercase.
+	static std::string transformToLowercase(std::string text);
+	//Returns a line of text with whitespaces at its two ends removed.
+	static std::string trimWhiteSpace(const std::string& text);
+	//Returns a line of text with whitespaces at its beginning removed.
+	static std::string trimLeft(const std::string& text, const std::string& delimiters = " \f\n\r\t\v");
+	//Returns a line of text with whitespaces at its end removed.
+	static std::string trimRight(const std::string& text, const std::string& delimiters = " \f\n\r\t\v");
 
-	//***********************************************************************//
-	//Setter and Getter functions for the internal storage components.
+	//GETTER AND SETTER FUNCTIONS FOR INTERNAL STORAGE COMPONENTS************//
 	static std::string getBuffer() { return buffer;}
 	static void setSaveFileName(std::string saveFile) { saveFileName = saveFile; }
 	static std::string getSaveFileName() { return saveFileName; }
@@ -104,6 +133,7 @@ public:
 	static void saveIndexToSearchStorage(int index) { searchStorage.push_back(index); }
 	static int getIndexFromSearchStorage(int index) { return searchStorage[index]; }
 	static int getSearchStorageSize() { return searchStorage.size(); }
+
 };
 
 #endif
