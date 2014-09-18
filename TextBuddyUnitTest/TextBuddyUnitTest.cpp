@@ -12,7 +12,7 @@ namespace TextBuddyUnitTest {
 			// TODO: Your test code here
 		}
 		
-		TEST_METHOD(TestMethod1) {
+		TEST_METHOD(TestMethod2) {
 			// TODO: Your test code here
 		}
 	};
