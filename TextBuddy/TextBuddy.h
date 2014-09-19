@@ -109,7 +109,7 @@ public:
 
 	//DELETE LOGIC***********************************************************//
 	//Deletes the line of text specified by the index from the save file.
-	static void deleteText(unsigned int index);
+	static void deleteText(std::string userInput);
 	//Checks the validity of the index specified. 
 	//Returns true if index exists.
 	static bool isValidDeletionIndex(unsigned int index);
@@ -124,8 +124,6 @@ public:
 	//CLEAR LOGIC************************************************************//
 	//Deletes all lines of text in the save file.
 	static void clearText();
-	//Deletes all lines of text in the internal textStorage vector.
-	static void clearTextStorage();
 
 	//SORT LOGIC*************************************************************//
 
@@ -161,15 +159,23 @@ public:
 
 	//GETTER AND SETTER FUNCTIONS FOR INTERNAL STORAGE COMPONENTS************//
 	static std::string getBuffer() { return buffer;}
+	
+	//Functions for the save file name
 	static void setSaveFileName(std::string saveFile) { saveFileName = saveFile; }
 	static std::string getSaveFileName() { return saveFileName; }
+
+	//Functions for the internal text storage vector
 	static void saveLineToStorage(std::string input) { textStorage.push_back(input); }
 	static std::string getLineFromTextStorage(int index) { return textStorage[index]; }
+	static void eraseLineFromTextStorage(int index) { textStorage.erase(textStorage.begin() + index); }
+	static void clearTextStorage() { textStorage.clear(); }
 	static unsigned int getTextStorageSize() { return textStorage.size(); }
+
+	//Function for the internal search storage vector
 	static void saveIndexToSearchStorage(int index) { searchStorage.push_back(index); }
 	static int getIndexFromSearchStorage(int index) { return searchStorage[index]; }
+	static void clearSearchStorage() {searchStorage.clear(); }
 	static unsigned int getSearchStorageSize() { return searchStorage.size(); }
-
 };
 
 #endif

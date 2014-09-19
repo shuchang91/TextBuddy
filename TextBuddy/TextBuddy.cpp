@@ -67,10 +67,10 @@ void TextBuddy::executeInput(std::string userInput) {
 		return TextBuddy::clearText();
 
 	case SORT:
-		return TextBuddy::sortText();
+		//return TextBuddy::sortText();
 
 	case SEARCH:
-		return TextBuddy::searchText(userInput);
+		//return TextBuddy::searchText(userInput);
 
 	case INVALID:
 		return TextBuddy::showMessage(MESSAGE_ERROR_COMMAND_NOT_RECOGNIZED);
@@ -146,8 +146,60 @@ void saveToSaveFile() {
 }
 
 //ADD LOGIC******************************************************************//
+void TextBuddy::addText(std::string userInput) {
+	std::string text = removeFirstWord(userInput);
 
+	TextBuddy::addToTextStorage(text);
+	TextBuddy::saveToSaveFile();
+	TextBuddy::showMessageAdded(text);
+}
 
+void TextBuddy::addToTextStorage(std::string text) {
+	TextBuddy::saveLineToStorage(text);
+}
+
+//DELETE LOGIC***************************************************************//
+void TextBuddy::deleteText(std::string userInput) {
+	int index = std::stoi(removeFirstWord(userInput)) - 1;
+
+	if(TextBuddy::isValidDeletionIndex(index)) {
+		std::string deletedLine = TextBuddy::deleteFromTextStorage(index);
+		TextBuddy::saveToSaveFile();
+		TextBuddy::showMessageDeleted(deletedLine);
+	}
+	else {
+		TextBuddy::showMessage(MESSAGE_ERROR_DELETION_FAILED);
+	}
+}
+
+bool TextBuddy::isValidDeletionIndex(unsigned int index) {
+	return (index >= 0 && index < TextBuddy::getTextStorageSize());
+}
+
+std::string TextBuddy::deleteFromTextStorage(unsigned int index) {
+	std::string deletedLine = TextBuddy::getLineFromTextStorage(index);
+	TextBuddy::eraseLineFromTextStorage(index);
+
+	return deletedLine;
+}
+
+//DISPLAY LOGIC**************************************************************//
+void TextBuddy::displayText() {
+	for(unsigned int i = 0; i < TextBuddy::getTextStorageSize(); i++) {
+		std::cout << i + 1 << ". " << TextBuddy::getLineFromTextStorage(i) << std::endl;
+	}
+}
+
+//CLEAR LOGIC****************************************************************//
+void TextBuddy::clearText() {
+	TextBuddy::clearTextStorage();
+	TextBuddy::saveToSaveFile();
+	TextBuddy::showMessageCleared();
+}
+
+//SORT LOGIC*****************************************************************//
+
+//SEARCH LOGIC***************************************************************//
 
 //DISPLAY MESSAGES TO USER***************************************************//
 void showMessage(std::string message) {
@@ -156,6 +208,21 @@ void showMessage(std::string message) {
 
 void TextBuddy::showMessageWelcome() {
 	sprintf_s(buffer, MESSAGE_WELCOME.c_str(), saveFileName.c_str());
+	TextBuddy::showMessage(buffer);
+}
+
+void TextBuddy::showMessageAdded(std::string text) {
+	sprintf_s(buffer, MESSAGE_ADDED.c_str(), saveFileName.c_str(), text.c_str());
+	TextBuddy::showMessage(buffer);
+}
+
+void TextBuddy::showMessageDeleted(std::string deletedLine) {
+	sprintf_s(buffer, MESSAGE_DELETED.c_str(), saveFileName.c_str(), deletedLine.c_str());
+	TextBuddy::showMessage(buffer);
+}
+
+void TextBuddy::showMessageCleared() {
+	sprintf_s(buffer, MESSAGE_CLEARED.c_str(), saveFileName.c_str());
 	TextBuddy::showMessage(buffer);
 }
 
