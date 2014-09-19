@@ -20,6 +20,8 @@ namespace TextBuddyUnitTest {
 			std::string expectedOutput = "test message";
 			unsigned int expectedSize = 1;
 
+			TextBuddy::setSaveFileName("saveFile.txt");
+			TextBuddy::clearText();
 			TextBuddy::executeInput(input);
 
 			Assert::AreEqual(expectedSize, TextBuddy::getTextStorageSize());
@@ -30,7 +32,11 @@ namespace TextBuddyUnitTest {
 			std::string input = "delete 1";			
 			unsigned int expectedSize = 0;
 
+			TextBuddy::setSaveFileName("saveFile.txt");
+			TextBuddy::clearText();
+			TextBuddy::addText("test");
 			TextBuddy::executeInput(input);
+
 			Assert::AreEqual(expectedSize, TextBuddy::getTextStorageSize());
 		}
 
@@ -43,6 +49,8 @@ namespace TextBuddyUnitTest {
 			std::string expectedOutput3 = "third test";
 			unsigned int expectedSize = 3;
 
+			TextBuddy::setSaveFileName("saveFile.txt");
+			TextBuddy::clearText();
 			TextBuddy::executeInput(input1);
 			TextBuddy::executeInput(input2);
 			TextBuddy::executeInput(input3);
@@ -55,8 +63,10 @@ namespace TextBuddyUnitTest {
 
 		TEST_METHOD(AddEmptyMessage) {
 			std::string input = "add   ";
-			unsigned int expectedSize = 3;
+			unsigned int expectedSize = 0;
 
+			TextBuddy::setSaveFileName("saveFile.txt");
+			TextBuddy::clearText();
 			TextBuddy::executeInput(input);
 
 			Assert::AreEqual(expectedSize, TextBuddy::getTextStorageSize());
@@ -64,8 +74,11 @@ namespace TextBuddyUnitTest {
 
 		TEST_METHOD(DeleteNonexistentMessage) {
 			std::string input = "delete 5";			
-			unsigned int expectedSize = 3;
+			unsigned int expectedSize = 1;
 
+			TextBuddy::setSaveFileName("saveFile.txt");
+			TextBuddy::clearText();
+			TextBuddy::addText("test");
 			TextBuddy::executeInput(input);
 			Assert::AreEqual(expectedSize, TextBuddy::getTextStorageSize());
 		}
@@ -74,6 +87,7 @@ namespace TextBuddyUnitTest {
 			std::string input = "clear";			
 			unsigned int expectedSize = 0;
 
+			TextBuddy::setSaveFileName("saveFile.txt");
 			TextBuddy::executeInput(input);
 			Assert::AreEqual(expectedSize, TextBuddy::getTextStorageSize());
 		}
@@ -88,6 +102,8 @@ namespace TextBuddyUnitTest {
 			std::string expectedOutput2 = "three";
 			std::string expectedOutput3 = "two";
 
+			TextBuddy::setSaveFileName("saveFile.txt");
+			TextBuddy::clearText();
 			TextBuddy::executeInput(input1);
 			TextBuddy::executeInput(input2);
 			TextBuddy::executeInput(input3);
@@ -106,6 +122,7 @@ namespace TextBuddyUnitTest {
 			std::string expectedOutput1 = "one";
 			std::string expectedOutput2 = "Two";
 
+			TextBuddy::setSaveFileName("saveFile.txt");
 			TextBuddy::clearText();
 			TextBuddy::executeInput(input1);
 			TextBuddy::executeInput(input2);
@@ -122,6 +139,7 @@ namespace TextBuddyUnitTest {
 			int expectedIndex = 0;
 			unsigned int expectedSize = 1;
 
+			TextBuddy::setSaveFileName("saveFile.txt");
 			TextBuddy::clearText();
 			TextBuddy::executeInput(input1);
 			TextBuddy::executeInput(input2);
@@ -132,13 +150,19 @@ namespace TextBuddyUnitTest {
 		}
 
 		TEST_METHOD(SearchMultipleMessages) {
-			std::string input1 = "add three";			
-			std::string input2 = "add one two three";
+			std::string input1 = "add one";			
+			std::string input2 = "add two";
+			std::string input3 = "add three";			
+			std::string input4 = "add one two three";
 			std::string inputSearch = "search o";
 			unsigned int expectedSize = 3;
 
+			TextBuddy::setSaveFileName("saveFile.txt");
+			TextBuddy::clearText();
 			TextBuddy::executeInput(input1);
 			TextBuddy::executeInput(input2);
+			TextBuddy::executeInput(input3);
+			TextBuddy::executeInput(input4);
 			TextBuddy::executeInput(inputSearch);
 
 			Assert::AreEqual(expectedSize, TextBuddy::getSearchStorageSize());
