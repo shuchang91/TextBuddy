@@ -101,12 +101,48 @@ public:
 	//Saves the content from internal storage to the save file.
 	static void saveToSaveFile();
 
+	//ADD LOGIC**************************************************************//
+	//Adds the text specified to the save file.
+	static void addText(std::string text);
+	//Adds the text specified to the internal textStorage vector.
+	static void addToTextStorage(std::string text);
+
+	//DELETE LOGIC***********************************************************//
+	//Deletes the line of text specified by the index from the save file.
+	static void deleteText(unsigned int index);
+	//Checks the validity of the index specified. 
+	//Returns true if index exists.
+	static bool isValidDeletionIndex(unsigned int index);
+	//Deletes the line of text specified by the index from the internal textStorage vector.
+	//Returns the deleted line of text as a string.
+	static std::string deleteFromTextStorage(unsigned int index);
+
+	//DISPLAY LOGIC**********************************************************//
+	//Displays all text in the save file.
+	static void displayText();
+
+	//CLEAR LOGIC************************************************************//
+	//Deletes all lines of text in the save file.
+	static void clearText();
+	//Deletes all lines of text in the internal textStorage vector.
+	static void clearTextStorage();
+
+	//SORT LOGIC*************************************************************//
+
+	//SEARCH LOGIC***********************************************************//
+
 	//DISPLAY MESSAGES TO USER***********************************************//
 	//Displays the message specified to the user.
 	static void showMessage(std::string message);
 	//Displays the formatted welcome message.
 	static void showMessageWelcome();
-	
+	//Displays confirmation that the given text has been added.
+	static void showMessageAdded(std::string text);
+	//Displays confirmation that the text specified has been deleted.
+	static void showMessageDeleted(std::string deletedLine);
+	//Displays confirmation that all text has been deleted.
+	static void showMessageCleared();
+
 	//STRING MODIFIERS*******************************************************//
 	//Returns the first word in a line of text.
 	static std::string getFirstWord(std::string text);
@@ -129,10 +165,10 @@ public:
 	static std::string getSaveFileName() { return saveFileName; }
 	static void saveLineToStorage(std::string input) { textStorage.push_back(input); }
 	static std::string getLineFromTextStorage(int index) { return textStorage[index]; }
-	static int getTextStorageSize() { return textStorage.size(); }
+	static unsigned int getTextStorageSize() { return textStorage.size(); }
 	static void saveIndexToSearchStorage(int index) { searchStorage.push_back(index); }
 	static int getIndexFromSearchStorage(int index) { return searchStorage[index]; }
-	static int getSearchStorageSize() { return searchStorage.size(); }
+	static unsigned int getSearchStorageSize() { return searchStorage.size(); }
 
 };
 

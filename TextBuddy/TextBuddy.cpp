@@ -139,11 +139,15 @@ void saveToSaveFile() {
 	std::ofstream textFile;
 
 	textFile.open(TextBuddy::getSaveFileName());
-	for(int i = 0; i < TextBuddy::getTextStorageSize(); i++) {
+	for(unsigned int i = 0; i < TextBuddy::getTextStorageSize(); i++) {
 		textFile << TextBuddy::getLineFromTextStorage(i) << std::endl;
 	}
 	textFile.close();
 }
+
+//ADD LOGIC******************************************************************//
+
+
 
 //DISPLAY MESSAGES TO USER***************************************************//
 void showMessage(std::string message) {
