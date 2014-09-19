@@ -29,47 +29,47 @@
 #include <algorithm>
 #include <cctype>
 
-const int MAX_STRING_LENGTH = 1000;
-const int VALID_ARGC = 1;
-const int SAVE_FILE_LOCATION_IN_ARGV = 2;
-const std::string VALID_SAVE_FILE_EXTENSION = "txt";
+static const int MAX_STRING_LENGTH = 1000;
+static const int VALID_ARGC = 2;
+static const int SAVE_FILE_LOCATION_IN_ARGV = 1;
+static const std::string VALID_SAVE_FILE_EXTENSION = "txt";
 
-const std::string MESSAGE_WELCOME = 
+static const std::string MESSAGE_WELCOME = 
 	"Welcome to TextBuddy++. %s is ready for use.";
-const std::string MESSAGE_TERMINATED = 
+static const std::string MESSAGE_TERMINATED = 
 	"TextBuddy++ terminated.";
-const std::string MESSAGE_ADDED = 
+static const std::string MESSAGE_ADDED = 
 	"Added to %s: \"%s\".";
-const std::string MESSAGE_DELETED = 
+static const std::string MESSAGE_DELETED = 
 	"Deleted from %s: \"%s\".";
-const std::string MESSAGE_CLEARED = 
+static const std::string MESSAGE_CLEARED = 
 	"All messages cleared from %s.";
 
-const std::string MESSAGE_ERROR_INITIALIZATION = 
+static const std::string MESSAGE_ERROR_INITIALIZATION = 
 	"Please initialize TextBuddy++ with the format TextBuddy.exe <SaveFile>.txt.";
-const std::string MESSAGE_ERROR_COMMAND_NOT_RECOGNIZED = 
+static const std::string MESSAGE_ERROR_COMMAND_NOT_RECOGNIZED = 
 	"Command not recognized. Please enter one of the following commands:\nAdd <string>\nDelete <index>\nDisplay\nClear\nSort\nSearch <keyword>\nExit\n";
-const std::string MESSAGE_ERROR_DELETION_FAILED = 
+static const std::string MESSAGE_ERROR_DELETION_FAILED = 
 	"Deletion failed because message database is empty or index does not exist.";
-const std::string MESSAGE_ERROR_SEARCH_NOT_FOUND = 
+static const std::string MESSAGE_ERROR_SEARCH_NOT_FOUND = 
 	"Search string was not found.";
-const std::string MESSAGE_ERROR_UNKNOWN = 
+static const std::string MESSAGE_ERROR_UNKNOWN = 
 	"Unknown error encountered. Please contact the developer.";
+
+static std::string saveFileName;
+static std::vector<std::string> textStorage;
+static std::vector<int> searchStorage;
+static char buffer[MAX_STRING_LENGTH];
 
 class TextBuddy {
 
-private:
-	static char buffer[MAX_STRING_LENGTH];
-	static std::string saveFileName;
-	static std::vector<std::string> textStorage;
-	static std::vector<int> searchStorage;
+public:
 
 	enum CommandType {
 		ADD, DELETE, DISPLAY, CLEAR, SORT, SEARCH, INVALID, EXIT
 	};
 
-public:
-	//TEXTBUDDY++ ENTRY POINT************************************************//
+//TEXTBUDDY++ ENTRY POINT************************************************//
 	//Runs TextBuddy++.
 	static void runTextBuddy(char* argv[]);
 	//Exits TextBuddy++.
@@ -81,7 +81,7 @@ public:
 	//Checks if the save file specified is a txt file.
 	static bool isValidSaveFile(std::string saveFile);
 
-	//MAIN PROGRAM LOGIC*****************************************************//
+//MAIN PROGRAM LOGIC*****************************************************//
 	//Prompts for and takes in a line of string as user input.
 	static std::string getUserInput();
 	//Executes the input specified.
@@ -95,19 +95,17 @@ public:
 	//Returns true if parameter specified is an integer.
 	static bool isValidDeleteCommand(std::string userInput);
 
-	//READING AND WRITING TO SAVE FILE***************************************//
+//READING AND WRITING TO SAVE FILE***************************************//
 	//Reads the content from the save file and copies it to internal storage.
 	static void readFromSaveFile();
 	//Saves the content from internal storage to the save file.
 	static void saveToSaveFile();
 
-	//ADD LOGIC**************************************************************//
+//ADD LOGIC**************************************************************//
 	//Adds the text specified to the save file.
-	static void addText(std::string text);
-	//Adds the text specified to the internal textStorage vector.
-	static void addToTextStorage(std::string text);
+	static void addText(std::string userInput);
 
-	//DELETE LOGIC***********************************************************//
+//DELETE LOGIC***********************************************************//
 	//Deletes the line of text specified by the index from the save file.
 	static void deleteText(std::string userInput);
 	//Checks the validity of the index specified. 
@@ -117,19 +115,19 @@ public:
 	//Returns the deleted line of text as a string.
 	static std::string deleteFromTextStorage(unsigned int index);
 
-	//DISPLAY LOGIC**********************************************************//
+//DISPLAY LOGIC**********************************************************//
 	//Displays all text in the save file.
 	static void displayText();
 
-	//CLEAR LOGIC************************************************************//
+//CLEAR LOGIC************************************************************//
 	//Deletes all lines of text in the save file.
 	static void clearText();
 
-	//SORT LOGIC*************************************************************//
+//SORT LOGIC*************************************************************//
 
-	//SEARCH LOGIC***********************************************************//
+//SEARCH LOGIC***********************************************************//
 
-	//DISPLAY MESSAGES TO USER***********************************************//
+//DISPLAY MESSAGES TO USER***********************************************//
 	//Displays the message specified to the user.
 	static void showMessage(std::string message);
 	//Displays the formatted welcome message.
@@ -141,7 +139,7 @@ public:
 	//Displays confirmation that all text has been deleted.
 	static void showMessageCleared();
 
-	//STRING MODIFIERS*******************************************************//
+//STRING MODIFIERS*******************************************************//
 	//Returns the first word in a line of text.
 	static std::string getFirstWord(std::string text);
 	//Returns a line of text with the first word removed.
@@ -157,25 +155,25 @@ public:
 	//Returns a line of text with whitespaces at its end removed.
 	static std::string trimRight(const std::string& text, const std::string& delimiters = " \f\n\r\t\v");
 
-	//GETTER AND SETTER FUNCTIONS FOR INTERNAL STORAGE COMPONENTS************//
-	static std::string getBuffer() { return buffer;}
+//GETTER AND SETTER FUNCTIONS FOR INTERNAL STORAGE COMPONENTS************//
+	static std::string getBuffer();
 	
 	//Functions for the save file name
-	static void setSaveFileName(std::string saveFile) { saveFileName = saveFile; }
-	static std::string getSaveFileName() { return saveFileName; }
+	static void setSaveFileName(std::string saveFile);
+	static std::string getSaveFileName();
 
 	//Functions for the internal text storage vector
-	static void saveLineToStorage(std::string input) { textStorage.push_back(input); }
-	static std::string getLineFromTextStorage(int index) { return textStorage[index]; }
-	static void eraseLineFromTextStorage(int index) { textStorage.erase(textStorage.begin() + index); }
-	static void clearTextStorage() { textStorage.clear(); }
-	static unsigned int getTextStorageSize() { return textStorage.size(); }
+	static void saveLineToStorage(std::string input);
+	static std::string getLineFromTextStorage(int index);
+	static void eraseLineFromTextStorage(int index);
+	static void clearTextStorage();
+	static unsigned int getTextStorageSize();
 
 	//Function for the internal search storage vector
-	static void saveIndexToSearchStorage(int index) { searchStorage.push_back(index); }
-	static int getIndexFromSearchStorage(int index) { return searchStorage[index]; }
-	static void clearSearchStorage() {searchStorage.clear(); }
-	static unsigned int getSearchStorageSize() { return searchStorage.size(); }
+	static void saveIndexToSearchStorage(int index);
+	static int getIndexFromSearchStorage(int index);
+	static void clearSearchStorage();
+	static unsigned int getSearchStorageSize();
 };
 
 #endif

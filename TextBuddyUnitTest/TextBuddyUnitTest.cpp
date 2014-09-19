@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
-#include <string>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -8,12 +7,23 @@ namespace TextBuddyUnitTest {
 	TEST_CLASS(TextBuddyUnitTest) {
 	public:
 
-		TEST_METHOD(TestMethod1) {
-			// TODO: Your test code here
-		}
-		
-		TEST_METHOD(TestMethod2) {
-			// TODO: Your test code here
-		}
+		TEST_METHOD(SetSaveFile) {
+			std::string input = "saveFile.txt";
+			std::string expectedOutput = "saveFile.txt";
+			TextBuddy::setSaveFileName(input);
+
+			Assert::AreEqual(expectedOutput, TextBuddy::getSaveFileName());
+			}
+
+		TEST_METHOD(AddMessage) {
+			std::string input = "add test message";
+			std::string expectedOutput = "test message";
+			unsigned int expectedSize = 1;
+
+			TextBuddy::addText(input);
+
+			Assert::AreEqual(expectedSize, TextBuddy::getTextStorageSize());
+			Assert::AreEqual(expectedOutput, TextBuddy::getLineFromTextStorage(0));
+			}
 	};
 }

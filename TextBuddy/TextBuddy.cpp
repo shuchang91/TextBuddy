@@ -9,7 +9,7 @@ void main(int argc, char* argv[]) {
 	}
 }
 
-//TEXTBUDDY++ EMTRY POINT****************************************************//
+//TEXTBUDDY++ ENTRY POINT****************************************************//
 void TextBuddy::runTextBuddy(char* argv[]) {
 	TextBuddy::setSaveFileName(argv[SAVE_FILE_LOCATION_IN_ARGV]);
 	TextBuddy::readFromSaveFile();
@@ -124,7 +124,7 @@ bool TextBuddy::isValidDeleteCommand(std::string userInput) {
 }
 
 //READING AND WRITING TO SAVE FILE*******************************************//
-void readFromSaveFile() {
+void TextBuddy::readFromSaveFile() {
 	std::ifstream textFile;
 	std::string currentLine;
 
@@ -135,7 +135,7 @@ void readFromSaveFile() {
 	textFile.close();
 }
 
-void saveToSaveFile() {
+void TextBuddy::saveToSaveFile() {
 	std::ofstream textFile;
 
 	textFile.open(TextBuddy::getSaveFileName());
@@ -147,20 +147,16 @@ void saveToSaveFile() {
 
 //ADD LOGIC******************************************************************//
 void TextBuddy::addText(std::string userInput) {
-	std::string text = removeFirstWord(userInput);
+	std::string text = TextBuddy::removeFirstWord(userInput);
 
-	TextBuddy::addToTextStorage(text);
+	TextBuddy::saveLineToStorage(text);
 	TextBuddy::saveToSaveFile();
 	TextBuddy::showMessageAdded(text);
 }
 
-void TextBuddy::addToTextStorage(std::string text) {
-	TextBuddy::saveLineToStorage(text);
-}
-
 //DELETE LOGIC***************************************************************//
 void TextBuddy::deleteText(std::string userInput) {
-	int index = std::stoi(removeFirstWord(userInput)) - 1;
+	int index = std::stoi(TextBuddy::removeFirstWord(userInput)) - 1;
 
 	if(TextBuddy::isValidDeletionIndex(index)) {
 		std::string deletedLine = TextBuddy::deleteFromTextStorage(index);
@@ -202,7 +198,7 @@ void TextBuddy::clearText() {
 //SEARCH LOGIC***************************************************************//
 
 //DISPLAY MESSAGES TO USER***************************************************//
-void showMessage(std::string message) {
+void TextBuddy::showMessage(std::string message) {
 	std::cout << message << std::endl;
 }
 
@@ -265,4 +261,53 @@ std::string TextBuddy::trimLeft(const std::string& text, const std::string& deli
 
 std::string TextBuddy::trimRight(const std::string& text, const std::string& delimiters) {
 	return text.substr(0, text.find_last_not_of(delimiters) + 1);
+}
+
+//GETTER AND SETTER FUNCTIONS FOR INTERNAL STORAGE COMPONENTS************//
+std::string TextBuddy::getBuffer() {
+	return buffer;
+}
+
+void TextBuddy::setSaveFileName(std::string saveFile) {
+	saveFileName = saveFile; 
+}
+
+std::string TextBuddy::getSaveFileName() {
+	return saveFileName; 
+}
+
+void TextBuddy::saveLineToStorage(std::string input) {
+	textStorage.push_back(input); 
+}
+
+std::string TextBuddy::getLineFromTextStorage(int index) {
+	return textStorage[index]; 
+}
+
+void TextBuddy::eraseLineFromTextStorage(int index) { 
+	textStorage.erase(textStorage.begin() + index); 
+}
+
+void TextBuddy::clearTextStorage() { 
+	textStorage.clear(); 
+}
+
+unsigned int TextBuddy::getTextStorageSize() {
+	return textStorage.size();
+}
+
+void TextBuddy::saveIndexToSearchStorage(int index) { 
+	searchStorage.push_back(index); 
+}
+
+int TextBuddy::getIndexFromSearchStorage(int index) { 
+	return searchStorage[index]; 
+}
+
+void TextBuddy::clearSearchStorage() { 
+	searchStorage.clear(); 
+}
+
+unsigned int TextBuddy::getSearchStorageSize() { 
+	return searchStorage.size(); 
 }
