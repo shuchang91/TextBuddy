@@ -201,10 +201,12 @@ void TextBuddy::sortText() {
 }
 
 void TextBuddy::sortTextStorage() {
-	std::stable_sort(textStorage.begin(), textStorage.end());
+	std::stable_sort(textStorage.begin(), textStorage.end(), TextBuddy::isAlphabeticallySmaller);
 }
 
-
+bool TextBuddy::isAlphabeticallySmaller(std::string first, std::string second) {
+	return (TextBuddy::transformToLowercase(first) < TextBuddy::transformToLowercase(second));
+}
 
 //SEARCH LOGIC***************************************************************//
 

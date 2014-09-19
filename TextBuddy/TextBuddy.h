@@ -128,6 +128,9 @@ public:
 	static void sortText();
 	//Sorts all lines of text in the internal textStorage vector alphabetically.
 	static void sortTextStorage();
+	//Compares two strings and determines the alphabetically smaller string.
+	//Returns true if the first string is alphabetically smaller.
+	static bool isAlphabeticallySmaller(std::string first, std::string second);
 
 //SEARCH LOGIC***********************************************************//
 

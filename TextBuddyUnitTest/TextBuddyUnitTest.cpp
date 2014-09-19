@@ -97,5 +97,22 @@ namespace TextBuddyUnitTest {
 			Assert::AreEqual(expectedOutput2, TextBuddy::getLineFromTextStorage(1));
 			Assert::AreEqual(expectedOutput3, TextBuddy::getLineFromTextStorage(2));
 		}
+		
+		TEST_METHOD(SortMessagesWithCasing) {
+			std::string input1 = "add one";			
+			std::string input2 = "add Two";			
+			std::string inputSort = "sort";
+
+			std::string expectedOutput1 = "one";
+			std::string expectedOutput2 = "Two";
+
+			TextBuddy::clearText();
+			TextBuddy::executeInput(input1);
+			TextBuddy::executeInput(input2);
+			TextBuddy::executeInput(inputSort);
+
+			Assert::AreEqual(expectedOutput1, TextBuddy::getLineFromTextStorage(0));
+			Assert::AreEqual(expectedOutput2, TextBuddy::getLineFromTextStorage(1));
+		}
 	};
 }
