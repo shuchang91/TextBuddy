@@ -114,5 +114,34 @@ namespace TextBuddyUnitTest {
 			Assert::AreEqual(expectedOutput1, TextBuddy::getLineFromTextStorage(0));
 			Assert::AreEqual(expectedOutput2, TextBuddy::getLineFromTextStorage(1));
 		}
+
+		TEST_METHOD(SearchMessages) {
+			std::string input1 = "add one";			
+			std::string input2 = "add two";
+			std::string inputSearch = "search ne";
+			int expectedIndex = 0;
+			unsigned int expectedSize = 1;
+
+			TextBuddy::clearText();
+			TextBuddy::executeInput(input1);
+			TextBuddy::executeInput(input2);
+			TextBuddy::executeInput(inputSearch);
+
+			Assert::AreEqual(expectedSize, TextBuddy::getSearchStorageSize());
+			Assert::AreEqual(expectedIndex, TextBuddy::getIndexFromSearchStorage(0));
+		}
+
+		TEST_METHOD(SearchMultipleMessages) {
+			std::string input1 = "add three";			
+			std::string input2 = "add one two three";
+			std::string inputSearch = "search o";
+			unsigned int expectedSize = 3;
+
+			TextBuddy::executeInput(input1);
+			TextBuddy::executeInput(input2);
+			TextBuddy::executeInput(inputSearch);
+
+			Assert::AreEqual(expectedSize, TextBuddy::getSearchStorageSize());
+		}
 	};
 }

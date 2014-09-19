@@ -70,7 +70,7 @@ void TextBuddy::executeInput(std::string userInput) {
 		return TextBuddy::sortText();
 
 	case SEARCH:
-		//return TextBuddy::searchText(userInput);
+		return TextBuddy::searchText(userInput);
 
 	case INVALID:
 		return TextBuddy::showMessage(MESSAGE_ERROR_COMMAND_NOT_RECOGNIZED);
@@ -209,8 +209,48 @@ bool TextBuddy::isAlphabeticallySmaller(std::string first, std::string second) {
 }
 
 //SEARCH LOGIC***************************************************************//
+void TextBuddy::searchText(std::string userInput) {
+	std::string searchString = TextBuddy::removeFirstWord(userInput);
 
-//DISPLAY MESSAGES TO USER***************************************************//
+	TextBuddy::searchTextStorage(searchString);
+	if(TextBuddy::hasSearchResults()) {
+		TextBuddy::displaySearchResults();
+	}
+	else {
+		TextBuddy::showMessage(MESSAGE_ERROR_SEARCH_NOT_FOUND);
+	}
+}
+
+void TextBuddy::searchTextStorage(std::string searchString) {
+	TextBuddy::clearSearchStorage();
+
+	for(unsigned int i = 0; i < TextBuddy::getTextStorageSize(); i++) {
+		if(isFoundInLine(searchString, i)) {
+			TextBuddy::saveIndexToSearchStorage(i);
+		}
+	}
+}
+
+bool TextBuddy::isFoundInLine(std::string searchString, int index) {
+	std::size_t isFound = TextBuddy::getLineFromTextStorage(index).find(searchString);
+	return (isFound != std::string::npos);
+}
+
+bool TextBuddy::hasSearchResults() {
+	return (TextBuddy::getSearchStorageSize() > 0);
+}
+
+void TextBuddy::displaySearchResults() {
+	for(unsigned int i = 0; i < TextBuddy::getSearchStorageSize(); i++) {
+		TextBuddy::displaySingleLine(TextBuddy::getIndexFromSearchStorage(i));
+	}
+}
+
+void TextBuddy::displaySingleLine(int index) {
+	std::cout << index + 1 << ". " << TextBuddy::getLineFromTextStorage(index) << std::endl;
+}
+
+//DISPLAY MESSAGES TO USER***********************************************//
 void TextBuddy::showMessage(std::string message) {
 	std::cout << message << std::endl;
 }

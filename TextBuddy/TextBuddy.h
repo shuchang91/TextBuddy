@@ -133,6 +133,20 @@ public:
 	static bool isAlphabeticallySmaller(std::string first, std::string second);
 
 //SEARCH LOGIC***********************************************************//
+	//Searches the save file for lines of text containing the text string.
+	static void searchText(std::string userInput);
+	//Searches the internal textStorage vector for lines of text containing
+	//the search string, and adds the index of such lines (if any) to the 
+	//internal searchStorage vector.
+	static void searchTextStorage(std::string searchString);
+	//Checks if the search string is found in the line specified by the index.
+	static bool isFoundInLine(std::string searchString, int index);
+	//Checks if the search has returned any results.
+	static bool hasSearchResults();
+	//Displays the search results to the user.
+	static void displaySearchResults();
+	//Displays a single line from the internal textStorage vector specified by the index.
+	static void displaySingleLine(int index);
 
 //DISPLAY MESSAGES TO USER***********************************************//
 	//Displays the message specified to the user.
