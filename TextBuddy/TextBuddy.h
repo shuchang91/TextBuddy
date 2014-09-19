@@ -124,6 +124,10 @@ public:
 	static void clearText();
 
 //SORT LOGIC*************************************************************//
+	//Sorts all lines of text in the save file alphabetically.
+	static void sortText();
+	//Sorts all lines of text in the internal textStorage vector alphabetically.
+	static void sortTextStorage();
 
 //SEARCH LOGIC***********************************************************//
 

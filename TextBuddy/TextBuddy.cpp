@@ -67,7 +67,7 @@ void TextBuddy::executeInput(std::string userInput) {
 		return TextBuddy::clearText();
 
 	case SORT:
-		//return TextBuddy::sortText();
+		return TextBuddy::sortText();
 
 	case SEARCH:
 		//return TextBuddy::searchText(userInput);
@@ -194,6 +194,17 @@ void TextBuddy::clearText() {
 }
 
 //SORT LOGIC*****************************************************************//
+void TextBuddy::sortText() {
+	TextBuddy::sortTextStorage();
+	TextBuddy::saveToSaveFile();
+	TextBuddy::displayText();
+}
+
+void TextBuddy::sortTextStorage() {
+	std::stable_sort(textStorage.begin(), textStorage.end());
+}
+
+
 
 //SEARCH LOGIC***************************************************************//
 
