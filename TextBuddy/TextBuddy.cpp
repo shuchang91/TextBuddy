@@ -276,13 +276,8 @@ void TextBuddy::showMessageCleared() {
 }
 
 //STRING MODIFIERS***********************************************************//
-std::string TextBuddy::getFirstWord(std::string text) {
-	std::istringstream iss(text);
-	std::string firstWord;
-
-	iss >> firstWord;
-
-	return firstWord;
+std::string TextBuddy::getFirstWord(std::string text, const std::string& delimiters) {
+	return text.substr(0, text.find_first_of(delimiters));
 }
 
 std::string TextBuddy::removeFirstWord(std::string text) {

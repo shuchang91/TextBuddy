@@ -162,7 +162,7 @@ public:
 
 //STRING MODIFIERS*******************************************************//
 	//Returns the first word in a line of text.
-	static std::string getFirstWord(std::string text);
+	static std::string getFirstWord(std::string text, const std::string& delimiters = " \f\n\r\t\v");
 	//Returns a line of text with the first word removed.
 	static std::string removeFirstWord(std::string text);
 	//Checks if a line of text contains only one word.
